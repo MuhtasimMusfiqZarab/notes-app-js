@@ -14,8 +14,13 @@ const notes = [
 ];
 
 //adding event listener to button
-document.querySelector("button").addEventListener("click", e => {
+document.querySelector("#create-note").addEventListener("click", e => {
   console.log("Did this worrk?");
   console.log(e);
   e.target.textContent = " Button is clicked";
+});
+document.querySelector("#remove-note").addEventListener("click", e => {
+  document.querySelectorAll(".note").forEach(note => {
+    note.remove();
+  });
 });
