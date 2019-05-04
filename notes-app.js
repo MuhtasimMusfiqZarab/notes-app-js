@@ -13,6 +13,31 @@ const notes = [
   }
 ];
 
+//filter object to store the latest filters
+const filters = {
+  searchText: ""
+};
+
+//rendering all the notes
+const renderNotes = (notes, filters) => {
+  const filteredNotes = notes.filter(note => {
+    return note.title.toLowerCase().includes(filters.searchText.toLowerCase());
+  });
+
+  //clearing previous rendered notes
+  document.querySelector("#notes").innerHTML = "";
+
+  //add filteded notes to DOM
+  filteredNotes.forEach(note => {
+    const noteElement = document.createElement("p");
+    noteElement.textContent = note.title;
+    document.querySelector("#notes").appendChild(noteElement);
+  });
+};
+
+//initial rendering without input change
+renderNotes(notes, filters);
+
 //adding event listener to button
 document.querySelector("#create-note").addEventListener("click", e => {
   console.log("Did this worrk?");
@@ -23,4 +48,10 @@ document.querySelector("#remove-note").addEventListener("click", e => {
   document.querySelectorAll(".note").forEach(note => {
     note.remove();
   });
+});
+
+//render as input changes
+document.querySelector("#search-text").addEventListener("input", e => {
+  filters.searchText = e.target.value;
+  renderNotes(notes, filters);
 });
