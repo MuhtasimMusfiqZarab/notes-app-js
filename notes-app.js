@@ -13,22 +13,9 @@ const notes = [
   }
 ];
 
-const h1 = document.querySelector("h1");
-
-console.log(h1.textContent);
-
-//query all and replace/ remove
-const ps = document.querySelectorAll("p");
-
-ps.forEach(p => {
-  p.textContent = " **********";
-  // or p.remove()
+//adding event listener to button
+document.querySelector("button").addEventListener("click", e => {
+  console.log("Did this worrk?");
+  console.log(e);
+  e.target.textContent = " Button is clicked";
 });
-
-//Adding a new element
-//1. create it
-const newParagraph = document.createElement("p");
-//2.Assigning values
-newParagraph.textContent = " This is a new element from javaScript";
-//3. Pick a place to put it
-document.querySelector("body").appendChild(newParagraph);
