@@ -51,13 +51,10 @@ document.querySelector("#search-text").addEventListener("input", e => {
   renderNotes(notes, filters);
 });
 
-//event listener for form
-document.querySelector("#name-form").addEventListener("submit", e => {
-  //cancle the default behaviour  of the form (default: full page refresh, adding the value to the URL after submit(updating the URL))
-  e.preventDefault();
-  //e.target gets us to the DOM element of the form
-  //elements contain all the input fields and is called by their name
-  console.log(e.target.elements.firstName.value);
-  //clearing the form field after submitting
-  e.target.elements.firstName.value = "";
+//dropdown filtering
+document.querySelector("#filter-by").addEventListener("change", e => {
+  console.log(e.target.value);
 });
+//input vs change
+// ==> input allowed us to get the new value for every keystock where change trows event after typing all the characters and then clicking away
+//we can use change for chekboxs & dropdowns though
