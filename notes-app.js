@@ -1,37 +1,8 @@
-let notes = [];
-
-//check for existing saves data
-const notesJSON = localStorage.getItem("notes");
-
-if (notesJSON !== null) {
-  notes = JSON.parse(notesJSON);
-}
+let notes = getSavedNotes();
 
 //filter object to store the latest filters
 const filters = {
   searchText: ""
-};
-
-//rendering all the notes
-const renderNotes = (notes, filters) => {
-  const filteredNotes = notes.filter(note => {
-    return note.title.toLowerCase().includes(filters.searchText.toLowerCase());
-  });
-
-  //clearing previous rendered notes
-  document.querySelector("#notes").innerHTML = "";
-
-  //add filteded notes to DOM
-  filteredNotes.forEach(note => {
-    const noteElement = document.createElement("p");
-    if (note.title.length > 0) {
-      noteElement.textContent = note.title;
-    } else {
-      noteElement.textContent = "Unnamed Note";
-    }
-
-    document.querySelector("#notes").appendChild(noteElement);
-  });
 };
 
 //initial rendering without input change
@@ -39,7 +10,6 @@ renderNotes(notes, filters);
 
 //create note-------event listener to button
 document.querySelector("#create-note").addEventListener("click", e => {
-  // e.target.textContent = " Button is clicked";
   notes.push({
     title: "",
     body: ""
