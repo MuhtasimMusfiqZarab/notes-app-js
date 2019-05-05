@@ -1,17 +1,11 @@
-const notes = [
-  {
-    title: "my next trip",
-    body: "I would like to go to Spain"
-  },
-  {
-    title: "Habbits to work on",
-    body: "Exercise. Eating a bit better."
-  },
-  {
-    title: "Office modification",
-    body: "Get a new seat"
-  }
-];
+let notes = [];
+
+//check for existing saves data
+const notesJSON = localStorage.getItem("notes");
+
+if (notesJSON !== null) {
+  notes = JSON.parse(notesJSON);
+}
 
 //filter object to store the latest filters
 const filters = {
@@ -30,7 +24,12 @@ const renderNotes = (notes, filters) => {
   //add filteded notes to DOM
   filteredNotes.forEach(note => {
     const noteElement = document.createElement("p");
-    noteElement.textContent = note.title;
+    if (note.title.length > 0) {
+      noteElement.textContent = note.title;
+    } else {
+      noteElement.textContent = "Unnamed Note";
+    }
+
     document.querySelector("#notes").appendChild(noteElement);
   });
 };
@@ -38,11 +37,16 @@ const renderNotes = (notes, filters) => {
 //initial rendering without input change
 renderNotes(notes, filters);
 
-//adding event listener to button
+//create note-------event listener to button
 document.querySelector("#create-note").addEventListener("click", e => {
-  console.log("Did this worrk?");
-  console.log(e);
-  e.target.textContent = " Button is clicked";
+  // e.target.textContent = " Button is clicked";
+  notes.push({
+    title: "",
+    body: ""
+  });
+  //saving to storage
+  localStorage.setItem("notes", JSON.stringify(notes));
+  renderNotes(notes, filters);
 });
 
 //render as input changes
