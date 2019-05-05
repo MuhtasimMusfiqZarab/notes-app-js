@@ -44,14 +44,20 @@ document.querySelector("#create-note").addEventListener("click", e => {
   console.log(e);
   e.target.textContent = " Button is clicked";
 });
-document.querySelector("#remove-note").addEventListener("click", e => {
-  document.querySelectorAll(".note").forEach(note => {
-    note.remove();
-  });
-});
 
 //render as input changes
 document.querySelector("#search-text").addEventListener("input", e => {
   filters.searchText = e.target.value;
   renderNotes(notes, filters);
+});
+
+//event listener for form
+document.querySelector("#name-form").addEventListener("submit", e => {
+  //cancle the default behaviour  of the form (default: full page refresh, adding the value to the URL after submit(updating the URL))
+  e.preventDefault();
+  //e.target gets us to the DOM element of the form
+  //elements contain all the input fields and is called by their name
+  console.log(e.target.elements.firstName.value);
+  //clearing the form field after submitting
+  e.target.elements.firstName.value = "";
 });
