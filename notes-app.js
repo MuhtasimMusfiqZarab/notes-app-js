@@ -35,3 +35,12 @@ document.querySelector("#filter-by").addEventListener("change", e => {
 //input vs change
 // ==> input allowed us to get the new value for every keystock where change trows event after typing all the characters and then clicking away
 //we can use change for chekboxs & dropdowns though
+
+///window global event listener for storage change ( for live data sync)
+window.addEventListener("storage", e => {
+  //checking if the change is made to notes
+  if (e.key === "notes") {
+    notes = JSON.parse(e.newValue);
+    renderNotes(notes, filters);
+  }
+});

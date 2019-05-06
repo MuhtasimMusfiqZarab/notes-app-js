@@ -5,8 +5,8 @@ const buttonElement = document.querySelector("#remove-note");
 
 // getting note id from URL
 const noteId = location.hash.substring(1); //get whole id string from #id... excluding the hash
-const notes = getSavedNotes(); //getting all the saved notes
-const note = notes.find(note => {
+let notes = getSavedNotes(); //getting all the saved notes
+let note = notes.find(note => {
   return note.id === noteId;
 });
 
@@ -37,4 +37,26 @@ buttonElement.addEventListener("click", e => {
   saveNotes(notes);
   //redirect after removing
   location.assign("/index.html");
+});
+
+//window global event listener for storage change ( for live data sync)
+//this code fires only for the other tab open-- not for the current tab where the chage is made
+window.addEventListener("storage", e => {
+  //checking if the change is made to notes
+  if (e.key === "notes") {
+    //JSON.parse(e.newValue) contains all of the notes including the changes
+    notes = JSON.parse(e.newValue);
+    note = notes.find(note => {
+      return note.id === noteId;
+    });
+
+    // no note is found
+    if (note === undefined) {
+      location.assign("/index.html");
+    }
+
+    //default Value (input & text area)
+    titleElement.value = note.title;
+    bodyElement.value = note.body;
+  }
 });
