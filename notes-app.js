@@ -2,7 +2,8 @@ let notes = getSavedNotes();
 
 //filter object to store the latest filters
 const filters = {
-  searchText: ""
+  searchText: "",
+  sortBy: "byEdited" //this is the default value
 };
 
 //initial rendering without input change
@@ -33,7 +34,8 @@ document.querySelector("#search-text").addEventListener("input", e => {
 
 //dropdown filtering
 document.querySelector("#filter-by").addEventListener("change", e => {
-  console.log(e.target.value);
+  filters.sortBy = e.target.value;
+  renderNotes(notes, filters);
 });
 //input vs change
 // ==> input allowed us to get the new value for every keystock where change trows event after typing all the characters and then clicking away
