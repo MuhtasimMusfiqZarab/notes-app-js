@@ -10,14 +10,16 @@ renderNotes(notes, filters);
 
 //create note-------event listener to button
 document.querySelector("#create-note").addEventListener("click", e => {
+  const id = uuidv4();
   notes.push({
-    id: uuidv4(),
+    id: id,
     title: "",
     body: ""
   });
   //saving to storage
   saveNotes(notes);
-  renderNotes(notes, filters);
+  //redirect here after creating
+  location.assign(`/edit.html#${id}`);
 });
 
 //render as input changes

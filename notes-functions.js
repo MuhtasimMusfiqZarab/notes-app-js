@@ -28,7 +28,7 @@ const removeNote = id => {
 const generateNoteDOM = note => {
   //this is the container element for p and button
   const noteElement = document.createElement("div");
-  const textElement = document.createElement("span");
+  const textElement = document.createElement("a");
   //adding remove note button
   const button = document.createElement("button");
   button.textContent = "x";
@@ -48,6 +48,7 @@ const generateNoteDOM = note => {
     textElement.textContent = "Unnamed Note ";
   }
   //appending text second
+  textElement.setAttribute("href", `/edit.html#${note.id}`);
   noteElement.appendChild(textElement);
   return noteElement;
 };
