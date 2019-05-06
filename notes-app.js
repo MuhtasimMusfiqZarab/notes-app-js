@@ -11,10 +11,13 @@ renderNotes(notes, filters);
 //create note-------event listener to button
 document.querySelector("#create-note").addEventListener("click", e => {
   const id = uuidv4();
+  const timestamp = moment().valueOf();
   notes.push({
     id: id,
     title: "",
-    body: ""
+    body: "",
+    createdAt: timestamp,
+    updatedAt: timestamp
   });
   //saving to storage
   saveNotes(notes);
@@ -37,6 +40,7 @@ document.querySelector("#filter-by").addEventListener("change", e => {
 //we can use change for chekboxs & dropdowns though
 
 ///window global event listener for storage change ( for live data sync)
+//this code fires only for the other tab open-- not for the current tab where the chage is made
 window.addEventListener("storage", e => {
   //checking if the change is made to notes
   if (e.key === "notes") {

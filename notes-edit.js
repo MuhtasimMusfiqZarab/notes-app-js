@@ -2,6 +2,7 @@
 const titleElement = document.querySelector("#note-title");
 const bodyElement = document.querySelector("#note-body");
 const buttonElement = document.querySelector("#remove-note");
+const dateElement = document.querySelector("#last-edited");
 
 // getting note id from URL
 const noteId = location.hash.substring(1); //get whole id string from #id... excluding the hash
@@ -18,16 +19,21 @@ if (note === undefined) {
 //default Value (input & text area)
 titleElement.value = note.title;
 bodyElement.value = note.body;
+dateElement.textContent = generateLastEdited(note.updatedAt);
 
 //editing title
 titleElement.addEventListener("input", e => {
   note.title = e.target.value;
+  note.updatedAt = moment().valueOf(); //update timestamp after edit
+  dateElement.textContent = generateLastEdited(note.updatedAt);
   saveNotes(notes);
 });
 
 //editing body
 bodyElement.addEventListener("input", e => {
   note.body = e.target.value;
+  note.updatedAt = moment().valueOf(); //update timestamp after edit
+  dateElement.textContent = generateLastEdited(note.updatedAt);
   saveNotes(notes);
 });
 
@@ -58,5 +64,6 @@ window.addEventListener("storage", e => {
     //default Value (input & text area)
     titleElement.value = note.title;
     bodyElement.value = note.body;
+    dateElement.textContent = generateLastEdited(note.updatedAt);
   }
 });
