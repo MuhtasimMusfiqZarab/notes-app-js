@@ -1,30 +1,29 @@
-//read existing notes from local storage
+"use strict";
+
+//read existing notes from local storage===================
 const getSavedNotes = () => {
   const notesJSON = localStorage.getItem("notes");
-
-  if (notesJSON !== null) {
-    return JSON.parse(notesJSON);
-  } else {
-    return [];
+  try {
+    return notesJSON ? JSON.parse(notesJSON) : [];
+  } catch (error) {
+    return []; //if unable to parse JSON data
   }
 };
 
-//saving notes
+//saving notes==============================================
 const saveNotes = notes => {
   localStorage.setItem("notes", JSON.stringify(notes));
 };
 
-//Remove a note from the list
+//Remove a note from the list================================
 const removeNote = id => {
-  const noteIndex = notes.findIndex(note => {
-    return note.id === id;
-  });
+  const noteIndex = notes.findIndex(note => note.id === id);
   if (noteIndex > -1) {
     notes.splice(noteIndex, 1);
   }
 };
 
-//Generate the DOM structure for a not
+//Generate the DOM structure for a not==========================
 const generateNoteDOM = note => {
   //this is the container element for p and button
   const noteElement = document.createElement("div");
@@ -53,7 +52,7 @@ const generateNoteDOM = note => {
   return noteElement;
 };
 
-// //sorting the notes in one of the three ways
+// //sorting the notes in one of the three ways==================
 const sortNotes = (notes, sortBy) => {
   if (sortBy === "byEdited") {
     return notes.sort((a, b) => {
@@ -90,13 +89,13 @@ const sortNotes = (notes, sortBy) => {
   }
 };
 
-//rendering application notes
+//rendering application notes=======================================
 const renderNotes = (notes, filters) => {
   //sorting notes before rendering
   notes = sortNotes(notes, filters.sortBy);
-  const filteredNotes = notes.filter(note => {
-    return note.title.toLowerCase().includes(filters.searchText.toLowerCase());
-  });
+  const filteredNotes = notes.filter(note =>
+    note.title.toLowerCase().includes(filters.searchText.toLowerCase())
+  );
 
   //clearing previous rendered notes
   document.querySelector("#notes").innerHTML = "";
@@ -108,7 +107,7 @@ const renderNotes = (notes, filters) => {
   });
 };
 
-//generate the last edited message
+//generate the last edited message====================================
 const generateLastEdited = timestamp => {
   return `Last edited ${moment(timestamp).fromNow()}`; //moment(timestamp) returns the time
 };

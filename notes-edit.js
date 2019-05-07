@@ -1,3 +1,5 @@
+"use strict";
+
 //quering text
 const titleElement = document.querySelector("#note-title");
 const bodyElement = document.querySelector("#note-body");
@@ -11,8 +13,9 @@ let note = notes.find(note => {
   return note.id === noteId;
 });
 
-// no note is found
-if (note === undefined) {
+// if no note is found (returns undefined)
+//for truthy value(found- we use note) else falsy value (we use !note)
+if (!note) {
   location.assign("/index.html");
 }
 
@@ -57,7 +60,8 @@ window.addEventListener("storage", e => {
     });
 
     // no note is found
-    if (note === undefined) {
+    //!note equals note===undefined
+    if (!note) {
       location.assign("/index.html");
     }
 

@@ -1,3 +1,5 @@
+"use strict";
+
 let notes = getSavedNotes();
 
 //filter object to store the latest filters
