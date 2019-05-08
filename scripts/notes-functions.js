@@ -26,29 +26,28 @@ const removeNote = id => {
 //Generate the DOM structure for a not==========================
 const generateNoteDOM = note => {
   //this is the container element for p and button
-  const noteElement = document.createElement("div");
-  const textElement = document.createElement("a");
-  //adding remove note button
-  const button = document.createElement("button");
-  button.textContent = "x";
+  const noteElement = document.createElement("a");
+  const textElement = document.createElement("p");
+  const statusEl = document.createElement("p");
 
-  //adding button 1st
-  noteElement.appendChild(button);
-  //delete event listener for this button
-  button.addEventListener("click", e => {
-    removeNote(note.id);
-    saveNotes(notes);
-    renderNotes(notes, filters); //re-rendering notes
-  });
   //setup the note title text
   if (note.title.length > 0) {
     textElement.textContent = note.title;
   } else {
     textElement.textContent = "Unnamed Note ";
   }
-  //appending text second
-  textElement.setAttribute("href", `/edit.html#${note.id}`);
+  textElement.classList.add("list-item__title");
+
   noteElement.appendChild(textElement);
+
+  //setup the link
+  noteElement.setAttribute("href", `/edit.html#${note.id}`);
+  noteElement.classList.add("list-item");
+
+  //setup the status message
+  statusEl.textContent = generateLastEdited(note.updatedAt);
+  statusEl.classList.add("list-item__subtitle");
+  noteElement.appendChild(statusEl);
   return noteElement;
 };
 
@@ -91,6 +90,7 @@ const sortNotes = (notes, sortBy) => {
 
 //rendering application notes=======================================
 const renderNotes = (notes, filters) => {
+  const notesEl = document.querySelector("#notes");
   //sorting notes before rendering
   notes = sortNotes(notes, filters.sortBy);
   const filteredNotes = notes.filter(note =>
@@ -98,13 +98,22 @@ const renderNotes = (notes, filters) => {
   );
 
   //clearing previous rendered notes
-  document.querySelector("#notes").innerHTML = "";
+  notesEl.innerHTML = "";
 
-  //add filteded notes to DOM
-  filteredNotes.forEach(note => {
-    const noteElement = generateNoteDOM(note);
-    document.querySelector("#notes").appendChild(noteElement);
-  });
+  //if we are rendering any notes
+  if (filteredNotes.length > 0) {
+    //add filteded notes to DOM
+    filteredNotes.forEach(note => {
+      const noteElement = generateNoteDOM(note);
+      notesEl.appendChild(noteElement);
+    });
+  } else {
+    const emptyMessage = document.createElement("p");
+    emptyMessage.textContent = " No notes to show";
+    //adding styles to this paragraph
+    emptyMessage.classList.add("empty-message");
+    notesEl.appendChild(emptyMessage);
+  }
 };
 
 //generate the last edited message====================================
