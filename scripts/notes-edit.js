@@ -13,8 +13,6 @@ let note = notes.find(note => {
   return note.id === noteId;
 });
 
-// if no note is found (returns undefined)
-//for truthy value(found- we use note) else falsy value (we use !note)
 if (!note) {
   location.assign("/index.html");
 }
@@ -48,8 +46,7 @@ buttonElement.addEventListener("click", e => {
   location.assign("/index.html");
 });
 
-//window global event listener for storage change ( for live data sync)
-//this code fires only for the other tab open-- not for the current tab where the chage is made
+//live data sync to other opened tabs
 window.addEventListener("storage", e => {
   //checking if the change is made to notes
   if (e.key === "notes") {
@@ -58,9 +55,7 @@ window.addEventListener("storage", e => {
     note = notes.find(note => {
       return note.id === noteId;
     });
-
-    // no note is found
-    //!note equals note===undefined
+    //!note equals note===undefined (no note found)
     if (!note) {
       location.assign("/index.html");
     }

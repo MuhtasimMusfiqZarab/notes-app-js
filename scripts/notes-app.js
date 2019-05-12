@@ -39,12 +39,7 @@ document.querySelector("#filter-by").addEventListener("change", e => {
   filters.sortBy = e.target.value;
   renderNotes(notes, filters);
 });
-//input vs change
-// ==> input allowed us to get the new value for every keystock where change trows event after typing all the characters and then clicking away
-//we can use change for chekboxs & dropdowns though
-
-///window global event listener for storage change ( for live data sync)
-//this code fires only for the other tab open-- not for the current tab where the chage is made
+//this code fires only showes changes to other opened tabs
 window.addEventListener("storage", e => {
   //checking if the change is made to notes
   if (e.key === "notes") {
