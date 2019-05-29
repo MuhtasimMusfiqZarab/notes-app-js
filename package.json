@@ -1,11 +1,14 @@
 {
   "name": "boilerplate",
   "version": "1.0.0",
+  "homepage": "https://muhtasimmusfiqzarab.github.io/notes-app-js/",
   "description": "",
   "main": "input.js",
   "scripts": {
     "dev-server": "webpack-dev-server --mode development",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +17,7 @@
     "babel-loader": "^7.1.4",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "gh-pages": "^2.0.1",
     "live-server": "^1.2.1",
     "moment": "^2.22.1",
     "uuid": "^3.2.1",
